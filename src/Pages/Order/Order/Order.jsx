@@ -7,7 +7,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { useState } from 'react';
 import Usemenu from '../../../Hookes/Usemenu';
-import FoodCard from '../../../Components/FoodCard/FoodCard';
+
+import OderTab from '../OderTab/OderTab';
 
 
 const Order = () => {
@@ -18,73 +19,44 @@ const Order = () => {
     const soup = menu.filter(item => item.category === "soup")
     const salad = menu.filter(item => item.category === "salad")
     const pizza = menu.filter(item => item.category === "pizza")
-    const drink = menu.filter(item => item.category === "drink")
+    const drink = menu.filter(item => item.category === "drinks")
     return (
         <div>
             <Helmet>
                 <title>Bistro || Oder</title>
             </Helmet>
-            <Cover img={oderCover} title="Oder Food"></Cover>
-            <div>
-                <Tabs defaultIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-                    <TabList>
+            <Cover img={oderCover} title="Order Food"></Cover>
+            <div className='mt-10'>
+                <Tabs defaultIndex={tabIndex} onSelect={(index) => setTabIndex(index)} >
+
+                    <TabList >
                         <Tab>Salad</Tab>
                         <Tab>Pizza</Tab>
                         <Tab>Soup</Tab>
                         <Tab>Desserts</Tab>
                         <Tab>Drink</Tab>
                     </TabList>
+
                     <TabPanel>
-                        <div className='grid grid-cols-3 gap-10 w-9/12 mx-auto'>
-                            {
-                                salad.map(item => <FoodCard
-                                    key={item._id}
-                                    item={item}
-                                ></FoodCard>)
-                            }
-                        </div>
+                        <OderTab items={salad}></OderTab>
                     </TabPanel>
+
                     <TabPanel>
-                        <div className='grid grid-cols-3 gap-10 w-9/12 mx-auto'>
-                            {
-                                pizza.map(item => <FoodCard
-                                    key={item._id}
-                                    item={item}
-                                ></FoodCard>)
-                            }
-                        </div>
+                        <OderTab items={pizza}></OderTab>
                     </TabPanel>
+
                     <TabPanel>
-                        <div className='grid grid-cols-3 gap-10 w-9/12 mx-auto'>
-                            {
-                                soup.map(item => <FoodCard
-                                    key={item._id}
-                                    item={item}
-                                ></FoodCard>)
-                            }
-                        </div>
+                        <OderTab items={soup}></OderTab>
                     </TabPanel>
+
                     <TabPanel>
-                        <div className='grid grid-cols-3 gap-10 w-9/12 mx-auto'>
-                            {
-                                dessert.map(item => <FoodCard
-                                    key={item._id}
-                                    item={item}
-                                ></FoodCard>)
-                            }
-                        </div>
+                        <OderTab items={dessert}></OderTab>
                     </TabPanel>
+
                     <TabPanel>
-                        <div className='grid grid-cols-3 gap-10 w-9/12 mx-auto'>
-                            {
-                                drink.map(item => <FoodCard
-                                    key={item._id}
-                                    item={item}
-                                ></FoodCard>)
-                            }
-                        </div>
+                        <OderTab items={drink}></OderTab>
                     </TabPanel>
-                    
+
                 </Tabs>
             </div>
 
