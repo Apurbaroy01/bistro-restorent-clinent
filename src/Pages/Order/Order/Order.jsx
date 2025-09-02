@@ -9,10 +9,17 @@ import { useState } from 'react';
 import Usemenu from '../../../Hookes/Usemenu';
 
 import OderTab from '../OderTab/OderTab';
+import { useParams } from 'react-router-dom';
 
 
 const Order = () => {
-    const [tabIndex, setTabIndex] = useState(0);
+    
+
+    const categories=['sald','pizza','soup','dessert','dirnks'];
+    const{catagory}=useParams();
+    const initalIndex= categories.indexOf(catagory)
+    const [tabIndex, setTabIndex] = useState(initalIndex);
+    
 
     const [menu] = Usemenu();
     const dessert = menu.filter(item => item.category === "dessert")
