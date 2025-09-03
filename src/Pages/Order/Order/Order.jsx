@@ -13,13 +13,13 @@ import { useParams } from 'react-router-dom';
 
 
 const Order = () => {
-    
 
-    const categories=['sald','pizza','soup','dessert','dirnks'];
-    const{catagory}=useParams();
-    const initalIndex= categories.indexOf(catagory)
-    const [tabIndex, setTabIndex] = useState(initalIndex);
     
+    const categories = ['sald', 'pizza', 'soup', 'dessert', 'dirnks'];
+    const { catagory } = useParams();
+    const initalIndex = categories.indexOf(catagory)
+    const [tabIndex, setTabIndex] = useState(initalIndex);
+
 
     const [menu] = Usemenu();
     const dessert = menu.filter(item => item.category === "dessert")
@@ -27,6 +27,11 @@ const Order = () => {
     const salad = menu.filter(item => item.category === "salad")
     const pizza = menu.filter(item => item.category === "pizza")
     const drink = menu.filter(item => item.category === "drinks")
+
+
+
+
+
     return (
         <div>
             <Helmet>
@@ -65,6 +70,7 @@ const Order = () => {
                     </TabPanel>
 
                 </Tabs>
+                
             </div>
 
         </div>
