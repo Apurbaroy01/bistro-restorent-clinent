@@ -1,24 +1,41 @@
-import { Mail, Lock } from "lucide-react"; // lucide-react install করলে কাজ করবে
-import { useEffect, useState } from "react";
+import { Mail, Lock } from "lucide-react"; 
+import { useRef, useEffect, useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
-import { LoadCanvasTemplate, loadCaptchaEnginge } from "react-simple-captcha";
+import { LoadCanvasTemplate, loadCaptchaEnginge, validateCaptcha } from "react-simple-captcha";
 
 const Login = () => {
-    const [eye, setEye] = useState();
+    const [eye, setEye] = useState(false);
+    const [error, setError] = useState(null);
+    const captchaRef = useRef(null);
 
     useEffect(() => {
-        loadCaptchaEnginge(6);
-    }, [])
+        loadCaptchaEnginge(6); // প্রথমবার ক্যাপচা লোড হবে
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
+        
+        const userCaptchaValue = captchaRef.current.value;
+        
 
-        console.log(email, password)
+        // ✅ ক্যাপচা চেক এখানে হবে
+        if (validateCaptcha(userCaptchaValue)) {
+            setError(null);
+            console.log("Login Success:", email, password);
 
-    }
+            // ✅ ক্যাপচা রিসেট
+            loadCaptchaEnginge(6);
+            captchaRef.current.value = "";
+            
+        } else {
+            setError("❌ Invalid captcha, please try again.");
+        }
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-4">
             <div className="card w-full max-w-md bg-white/90 backdrop-blur-lg shadow-2xl rounded-2xl">
@@ -39,21 +56,29 @@ const Login = () => {
                             {/* Password Input */}
                             <label className="input input-bordered flex items-center gap-2 w-full">
                                 <Lock className="w-5 h-5 text-gray-400" />
-                                <input type={eye ? "text" : "password"} className="grow" placeholder="Password" name="password" />
-                                <p className="text-xl" onClick={() => setEye(!eye)}>
-                                    {
-                                        eye ? <FaRegEye />: <FaRegEyeSlash />
-                                    }
-
+                                <input
+                                    type={eye ? "text" : "password"}
+                                    className="grow"
+                                    placeholder="Password"
+                                    name="password"
+                                />
+                                <p className="text-xl cursor-pointer" onClick={() => setEye(!eye)}>
+                                    {eye ? <FaRegEye /> : <FaRegEyeSlash />}
                                 </p>
                             </label>
-                            <label className=" flex flex-col  gap-2 w-full">
+
+                            {/* Captcha */}
+                            <label className="flex flex-col gap-2 w-full">
                                 <LoadCanvasTemplate />
-
                                 <div className="input input-bordered flex items-center gap-2 w-full">
-                                    <input type="text" className="grow" placeholder="Type captcha"  />
+                                    <input
+                                        ref={captchaRef}
+                                        type="text"
+                                        className="grow"
+                                        placeholder="Type captcha"
+                                    />
                                 </div>
-
+                                {error && <p className="text-red-500 text-sm">{error}</p>}
                             </label>
 
                             <div className="flex justify-between items-center text-sm">
@@ -62,7 +87,10 @@ const Login = () => {
                             </div>
 
                             {/* Login Button */}
-                            <button className="btn bg-indigo-600 hover:bg-indigo-700 text-white w-full mt-2">
+                            <button
+                                type="submit"
+                                className="btn bg-indigo-600 hover:bg-indigo-700 text-white w-full mt-2"
+                            >
                                 Login
                             </button>
 
