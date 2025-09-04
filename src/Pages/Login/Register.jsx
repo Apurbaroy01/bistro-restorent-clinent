@@ -1,19 +1,21 @@
 import { Mail, Lock } from "lucide-react";
-import { useContext, useState } from "react";
+import { useRef, useEffect, useState, useContext } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
-
-import { Link, useNavigate } from "react-router-dom";
+import { LoadCanvasTemplate, loadCaptchaEnginge, validateCaptcha } from "react-simple-captcha";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
-    const { signIn } = useContext(AuthContext)
-    const navigate = useNavigate()
+const Register = () => {
+    const { createUser } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const [eye, setEye] = useState(false);
     const [error, setError] = useState(null);
+    const captchaRef = useRef(null);
 
-
-
+    useEffect(() => {
+        loadCaptchaEnginge(6); // প্রথমবার ক্যাপচা লোড হবে
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -22,18 +24,30 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
 
-        console.log(email, password)
+        const userCaptchaValue = captchaRef.current.value;
 
-        signIn(email, password)
-            .then((result) => {
-                console.log(result)
-                navigate("/")
 
-            })
-            .catch((error) => {
-                console.log(error.message)
-            })
+        // ✅ ক্যাপচা চেক এখানে হবে
+        if (validateCaptcha(userCaptchaValue)) {
+            setError(null);
+            console.log("Login Success:", email, password);
 
+            createUser(email, password)
+                .then((result) => {
+                    console.log(result)
+                    navigate("/")
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+
+            // ✅ ক্যাপচা রিসেট
+            loadCaptchaEnginge(6);
+            captchaRef.current.value = "";
+
+        } else {
+            setError("❌ Invalid captcha, please try again.");
+        }
     };
 
     return (
@@ -67,11 +81,23 @@ const Login = () => {
                                 </p>
                             </label>
 
-
+                            {/* Captcha */}
+                            <label className="flex flex-col gap-2 w-full">
+                                <LoadCanvasTemplate />
+                                <div className="input input-bordered flex items-center gap-2 w-full">
+                                    <input
+                                        ref={captchaRef}
+                                        type="text"
+                                        className="grow"
+                                        placeholder="Type captcha"
+                                    />
+                                </div>
+                                {error && <p className="text-red-500 text-sm">{error}</p>}
+                            </label>
 
                             <div className="flex justify-between items-center text-sm">
                                 <a className="link link-hover text-indigo-600">Forgot password?</a>
-                                <a className="link link-hover text-indigo-600"><Link to="/register">Create account</Link></a>
+                                <div className="link link-hover text-indigo-600"><Link to="/login">Alredy Login</Link></div>
                             </div>
 
                             {/* Login Button */}
@@ -79,7 +105,7 @@ const Login = () => {
                                 type="submit"
                                 className="btn bg-indigo-600 hover:bg-indigo-700 text-white w-full mt-2"
                             >
-                                Login
+                                Register
                             </button>
 
                         </fieldset>
@@ -90,4 +116,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Register;
