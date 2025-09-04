@@ -39,10 +39,10 @@ const Login = () => {
                             {/* Password Input */}
                             <label className="input input-bordered flex items-center gap-2 w-full">
                                 <Lock className="w-5 h-5 text-gray-400" />
-                                <input type={eye ? "password" : "text"} className="grow" placeholder="Password" name="password" />
+                                <input type={eye ? "text" : "password"} className="grow" placeholder="Password" name="password" />
                                 <p className="text-xl" onClick={() => setEye(!eye)}>
                                     {
-                                        eye ? <FaRegEyeSlash /> : <FaRegEye />
+                                        eye ? <FaRegEye />: <FaRegEyeSlash />
                                     }
 
                                 </p>
