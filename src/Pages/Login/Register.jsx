@@ -6,7 +6,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
-    const { createUser } = useContext(AuthContext);
+    const { createUser,updateprofile } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [eye, setEye] = useState(false);
@@ -22,6 +22,7 @@ const Register = () => {
 
         const form = e.target;
         const email = form.email.value;
+        const url = form.url.value;
         const password = form.password.value;
 
         const userCaptchaValue = captchaRef.current.value;
@@ -30,12 +31,20 @@ const Register = () => {
         // ✅ ক্যাপচা চেক এখানে হবে
         if (validateCaptcha(userCaptchaValue)) {
             setError(null);
-            console.log("Login Success:", email, password);
+            console.log("Login Success:", email, password,url);
 
             createUser(email, password)
                 .then((result) => {
                     console.log(result)
                     navigate("/")
+
+                    updateprofile(name,url)
+                    .then(()=>{
+                        console.log("user profile update")
+                    })
+                    .catch((error)=>{
+                        console.log(error.message)
+                    })
                 })
                 .catch((error) => {
                     console.log(error)
@@ -65,6 +74,11 @@ const Register = () => {
                             <label className="input input-bordered flex items-center gap-2 w-full">
                                 <Mail className="w-5 h-5 text-gray-400" />
                                 <input type="email" className="grow" placeholder="Email" name="email" />
+                            </label>
+
+                            <label className="input input-bordered flex items-center gap-2 w-full">
+                                <Mail className="w-5 h-5 text-gray-400" />
+                                <input type="url" className="grow" placeholder="Url" name="url" />
                             </label>
 
                             {/* Password Input */}
