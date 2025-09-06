@@ -6,7 +6,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
-    const { createUser,updateprofile } = useContext(AuthContext);
+    const { createUser, updateprofile } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [eye, setEye] = useState(false);

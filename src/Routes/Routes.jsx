@@ -11,6 +11,7 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Login/Register";
 import Secreat from "../Pages/Share/Secreat";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import ProfileSetting from "../Components/Profile/ProfileSetting/ProfileSetting";
 
 
 const router = createBrowserRouter([
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <Register></Register>
+      },
+      {
+        path: "profile",
+        element: <ProfileSetting></ProfileSetting>
       },
       {
         path: "secreat",
