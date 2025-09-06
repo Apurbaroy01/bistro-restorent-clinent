@@ -2,15 +2,20 @@ import { Mail, Lock } from "lucide-react";
 import { useContext, useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const Login = () => {
     const { signIn } = useContext(AuthContext)
-    const navigate = useNavigate()
-
     const [eye, setEye] = useState(false);
-    const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/"
+
+    
+
+    // const [error, setError] = useState(null);
 
 
 
@@ -27,7 +32,7 @@ const Login = () => {
         signIn(email, password)
             .then((result) => {
                 console.log(result)
-                navigate("/")
+                navigate(from, { replace: true });
 
             })
             .catch((error) => {
