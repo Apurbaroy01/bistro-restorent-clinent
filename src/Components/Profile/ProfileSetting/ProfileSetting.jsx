@@ -15,8 +15,8 @@ const ProfileSetting = () => {
         if (!user) return;
 
         updateProfile(user, {
-            displayName: name,
-            photoURL: photo,
+            displayName: name || user.displayName,
+            photoURL: photo || user.photoURL,
         })
             .then(() => {
                 setMessage("✅ Profile updated successfully!");
