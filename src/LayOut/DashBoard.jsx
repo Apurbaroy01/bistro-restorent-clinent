@@ -23,7 +23,7 @@ const DashBoard = () => {
 
                 </ul>
             </div>
-            <div className="col-span-10 bg-gray-50 p-5">
+            <div className="col-span-10 bg-gray-50 p-5 ">
                 <Outlet></Outlet>
             </div>
         </div>
