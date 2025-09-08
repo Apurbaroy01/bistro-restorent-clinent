@@ -4,9 +4,11 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { LoadCanvasTemplate, loadCaptchaEnginge, validateCaptcha } from "react-simple-captcha";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
+import useAxiosPurblic from "../../Hookes/useAxiosPurblic";
 
 const Register = () => {
     const { createUser, updateprofile } = useContext(AuthContext);
+    const axiosPublic = useAxiosPurblic();
     const navigate = useNavigate();
 
     const [eye, setEye] = useState(false);
@@ -31,23 +33,36 @@ const Register = () => {
         // ✅ ক্যাপচা চেক এখানে হবে
         if (validateCaptcha(userCaptchaValue)) {
             setError(null);
-            console.log("Login Success:", email, password,url);
+            console.log("Login Success:", email, password, url);
 
             createUser(email, password)
                 .then((result) => {
                     console.log(result)
                     navigate("/")
 
-                    updateprofile(name,url)
-                    .then(()=>{
-                        console.log("user profile update")
-                    })
-                    .catch((error)=>{
-                        console.log(error.message)
-                    })
+                    const userInfo = {
+                        name,
+                        email: result.user.email,
+                        photoURL: url,
+                        password,
+                    }
+                    console.log(userInfo)
+
+                    axiosPublic.post('/users', userInfo)
+                        .then(data => {
+                            console.log("send user", data.data)
+                        })
+
+                    updateprofile(name, url)
+                        .then(() => {
+                            console.log("user profile update")
+                        })
+                        .catch((error) => {
+                            console.log(error.message)
+                        })
                 })
                 .catch((error) => {
-                    console.log(error)
+                    console.log(error.message)
                 })
 
             // ✅ ক্যাপচা রিসেট
