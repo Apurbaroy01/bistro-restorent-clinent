@@ -5,6 +5,8 @@ import { LoadCanvasTemplate, loadCaptchaEnginge, validateCaptcha } from "react-s
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import useAxiosPurblic from "../../Hookes/useAxiosPurblic";
+import SosalLogin from "../../Components/SocialLogin/SosalLogin";
+
 
 const Register = () => {
     const { createUser, updateprofile } = useContext(AuthContext);
@@ -126,7 +128,7 @@ const Register = () => {
 
                             <div className="flex justify-between items-center text-sm">
                                 <a className="link link-hover text-indigo-600">Forgot password?</a>
-                                <div className="link link-hover text-indigo-600"><Link to="/login">Alredy Login</Link></div>
+                                <div className="link link-hover text-indigo-600"><Link to="/login">Alredy have an account</Link></div>
                             </div>
 
                             {/* Login Button */}
@@ -136,6 +138,7 @@ const Register = () => {
                             >
                                 Register
                             </button>
+                            <SosalLogin></SosalLogin>
 
                         </fieldset>
                     </form>
