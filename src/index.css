@@ -1,2 +1,13 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+li>a.active {
+    color: rgb(255, 255, 255);
+    background-color: rgba(0, 21, 249, 0.507);
+}
+
+/* a.active {
+    text-decoration: underline  #17e009ef 2px;
+    text-underline-offset: 4px;
+
+} */
