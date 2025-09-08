@@ -6,16 +6,16 @@ import useAuth from "./useAuth";
 const useCart = () => {
     // tanstack quary
     const useAxioss = useAxios();
-    const {user}=useAuth();
-    const {refetch, data: cart = [] } = useQuery({
+    const { user } = useAuth();
+    const { refetch, data: cart = [] } = useQuery({
         queryKey: ["cards"],
         queryFn: async () => {
-            const res =await useAxioss.get(`/cards?email=${user.email}`)
+            const res = await useAxioss.get(`/cards?email=${user.email}`)
             return res.data
         }
 
     })
-    return [cart,refetch];
+    return [cart, refetch];
 };
 
 export default useCart;
