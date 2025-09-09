@@ -4,6 +4,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
+import SosalLogin from "../../Components/SocialLogin/SosalLogin";
 
 const Login = () => {
     const { signIn } = useContext(AuthContext)
@@ -86,7 +87,7 @@ const Login = () => {
                             >
                                 Login
                             </button>
-
+                            <SosalLogin></SosalLogin>
                         </fieldset>
                     </form>
                 </div>
