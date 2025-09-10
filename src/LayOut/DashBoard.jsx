@@ -3,11 +3,12 @@ import { FaCalendar, FaList } from "react-icons/fa6";
 import { IoIosMail } from "react-icons/io";
 import { TiShoppingCart } from "react-icons/ti";
 import { NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../Hookes/useAdmin";
 
 
 const DashBoard = () => {
 
-    const isAdmin = true;
+    const [isAdmin] = useAdmin();
 
     return (
         <div className="grid grid-cols-12 min-h-screen">
