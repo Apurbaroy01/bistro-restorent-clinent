@@ -24,9 +24,9 @@ const DashBoard = () => {
 
                             <div className="divider"></div>
 
-                            {/* <li><NavLink to="/"><FaHome /> Home </NavLink></li>
+                            <li><NavLink to="/"><FaHome /> Home </NavLink></li>
                             <li><NavLink to="/menu"><FaSearch /> Menu </NavLink></li>
-                            <li><NavLink to="/order/contact"><IoIosMail /> Contact </NavLink></li> */}
+                            <li><NavLink to="/order/contact"><IoIosMail /> Contact </NavLink></li>
                         </>
                         :
                         <>
